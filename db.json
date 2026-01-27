@@ -17,7 +17,7 @@
       "description": "Soft, breathable linen bedding for calm nights.",
       "category": "Living",
       "rating": 4.8,
-      "isOutOfStock": true
+      "isOutOfStock": false
     },
     {
       "id": "2",
@@ -27,7 +27,7 @@
       "description": "Warm citrus and cedar notes for cozy evenings.",
       "category": "Lifestyle",
       "rating": 4.6,
-      "isOutOfStock": true
+      "isOutOfStock": false
     },
     {
       "id": "3",
