@@ -6,6 +6,13 @@
       "email": "demo@breeze.com",
       "password": "demo1234",
       "createdAt": "2026-01-24T00:00:00.000Z"
+    },
+    {
+      "id": "cf05",
+      "name": "김동주",
+      "email": "rlaehdehd20@jiran.com",
+      "password": "wkaemfwl1%",
+      "createdAt": "2026-01-28T03:37:31.245Z"
     }
   ],
   "products": [
