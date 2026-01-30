@@ -10,6 +10,12 @@ test.describe("구매 플로우", () => {
     await resetOrdersForUser(request, testUserId);
   });
 
+  test.afterEach(async ({ request }) => {
+    // 각 테스트 후에도 장바구니와 주문 내역 초기화
+    await resetCartForUser(request, testUserId);
+    await resetOrdersForUser(request, testUserId);
+  });
+
   test("로그인 -> 상품 보기 -> 장바구니 담기 -> 구매하기", async ({
     page,
   }) => {

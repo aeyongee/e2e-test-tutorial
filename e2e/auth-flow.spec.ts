@@ -1,7 +1,24 @@
 import { expect } from "@playwright/test";
-import { test, API_BASE_URL } from "./helper";
+import {
+  test,
+  API_BASE_URL,
+  resetCartForUser,
+  resetOrdersForUser,
+} from "./helper";
 
 test.describe("인증 플로우", () => {
+  let createdUserId: string | null = null;
+
+  test.afterEach(async ({ request }) => {
+    // 테스트 후 생성된 사용자의 데이터 정리
+    if (createdUserId) {
+      await resetCartForUser(request, createdUserId);
+      await resetOrdersForUser(request, createdUserId);
+      await request.delete(`${API_BASE_URL}/users/${createdUserId}`);
+      createdUserId = null;
+    }
+  });
+
   test("회원가입 -> 로그인", async ({ page, request }) => {
     // 고유한 이메일 생성 (타임스탬프 사용)
     const timestamp = Date.now();
@@ -62,7 +79,7 @@ test.describe("인증 플로우", () => {
     // 네비게이션 바에서 사용자 이름 다시 확인
     await expect(page.getByText(testName)).toBeVisible();
 
-    // 테스트 정리: 생성한 사용자 삭제
+    // 생성한 사용자 ID 저장 (afterEach에서 정리)
     const usersResponse = await request.get(`${API_BASE_URL}/users`);
     const users = (await usersResponse.json()) as Array<{
       id: string;
@@ -70,7 +87,7 @@ test.describe("인증 플로우", () => {
     }>;
     const createdUser = users.find((u) => u.email === testEmail);
     if (createdUser) {
-      await request.delete(`${API_BASE_URL}/users/${createdUser.id}`);
+      createdUserId = createdUser.id;
     }
   });
 });
